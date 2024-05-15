@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     Promise.all(fetchPromises).then(results => {
-        let tableHtml = '<table><tr><th>日付</th><th>日の入り時刻</th><th>1時間前の時刻</th></tr>';
+        let tableHtml = '<table><tr><th>日付</th><th>日の入り時刻</th><th>BGM切り替えの時刻</th></tr>';
         results.forEach(result => {
             tableHtml += `<tr><td>${result.date}</td><td>${result.sunsetTime}</td><td>${result.adjustedTime}</td></tr>`;
         });
