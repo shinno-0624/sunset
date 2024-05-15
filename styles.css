@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+#sunset-time, #adjusted-time {
+    font-size: 120%;
+    margin-top: 20px;
+}
