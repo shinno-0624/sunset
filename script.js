@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 東京の緯度と経度
     const latitude = 35.630;
-    const longitude = 140.168;
+    const longitude = 140.18;
 
     // APIから日の入り時刻を取得
     fetch(`https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&formatted=0`)
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     const latitude = 35.630; // 日の出町の緯度
-    const longitude = 140.168; // 日の出町の経度
+    const longitude = 140.18; // 日の出町の経度
     const daysToShow = 7;
     const fetchPromises = [];
 
