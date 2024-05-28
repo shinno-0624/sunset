@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // 一定の時間（例: 1時間 = 60分 = 3600秒）を引く
                 const adjustedDate = new Date(data.results.sunset);
-                adjustedDate.setSeconds(adjustedDate.getSeconds() - 2190);  // 1時間引く
+                adjustedDate.setSeconds(adjustedDate.getSeconds() - 2202);  // 1時間引く
 
                 const adjustedTime = adjustedDate.toLocaleTimeString('ja-JP', { timeZone: 'Asia/Tokyo' });
                 document.getElementById('adjusted-time').innerText = `BGM切り替えの時刻: ${adjustedTime}`;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.status === 'OK') {
                     const sunsetTime = new Date(data.results.sunset).toLocaleTimeString('ja-JP', { timeZone: 'Asia/Tokyo' });
                     const adjustedDate = new Date(data.results.sunset);
-                adjustedDate.setSeconds(adjustedDate.getSeconds() - 2190);  // 1時間引く
+                adjustedDate.setSeconds(adjustedDate.getSeconds() - 2202);  // 1時間引く
                     const adjustedTime = adjustedDate.toLocaleTimeString('ja-JP', { timeZone: 'Asia/Tokyo' });
                     return { date: dateString, sunsetTime, adjustedTime };
                 } else {
