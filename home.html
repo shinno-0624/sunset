@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+</head>
+<body style="background-color: black; color: rgb(0, 255, 0); margin-left: 50px;">
+    <h1>ホーム</h1>
+    <h2 id="time"></h2>
+    <h2>
+        <a href="https://www.umitenki.jp/tenki/1282/1hour"><span style="color: rgb(0, 255, 0);">TDS 天候</span></a>
+        <br>
+        <a href="https://shinno-0624.github.io/sunset/index.html"><span style="color: rgb(0, 255, 0);">日の入り/BGM</span></a>
+        <br>
+        <a href="https://www.tokyodisneyresort.jp/tdl/monthly/calendar.html"><span style="color: rgb(0, 255, 0);">TDLカレンダー</span></a>
+        <br>
+        <a href="https://www.tokyodisneyresort.jp/tda/monthly/calendar.html"><span style="color: rgb(0, 255, 0);">TDSカレンダー</span></a>
+        <br>
+        <a href="https://www.tokyodisneyresort.jp/tdl/attraction.html"><span style="color: rgb(0, 255, 0);">TDLアトラクション</span></a>
+        <br>
+        <a href="https://www.tokyodisneyresort.jp/tds/attraction.html"><span style="color: rgb(0, 255, 0);">TDSアトラクション</span></a>
+        <br>
+        <a href="https://www.jma.go.jp/bosai/amedas/#area_type=offices&area_code=130000&amdno=44136&format=table10min&elems=3000"><span style="color: rgb(0, 255, 0);">江戸川臨海アメダス</span></a>
+        <br>
+        <a href="https://loo-ool.com/rail/c/"><span style="color: rgb(0, 255, 0);">中央線運用</span></a>
+        <br>
+        <a href="https://loo-ool.com/rail/B/"><span style="color: rgb(0, 255, 0);">京葉線運用</span></a>
+        <br>
+        <a href="https://teams.microsoft.com/v2/"><span style="color: rgb(0, 255, 0);">Teams</span></a>
+    </h2>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = ('0' + (now.getMonth() + 1)).slice(-2);
+            const day = ('0' + now.getDate()).slice(-2);
+            const hours = ('0' + now.getHours()).slice(-2);
+            const minutes = ('0' + now.getMinutes()).slice(-2);
+            const seconds = ('0' + now.getSeconds()).slice(-2);
+
+            const formattedTime = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('time').textContent = formattedTime;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime(); // ページ読み込み時にすぐ表示するために呼び出す
+    </script>
+</body>
+</html>
