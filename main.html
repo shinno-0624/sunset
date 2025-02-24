@@ -73,19 +73,14 @@
       nextWeek.setDate(nextWeek.getDate() + 7);
 
       rows.forEach(row => {
-        const [date, sunset] = row.split(',').map(item => item.trim()); // 空白除去
+        const [date, sunset] = row.split(',').map(item => item.trim());
         const rowDate = new Date(date);
 
-        const [hour, minute] = sunset.split(':').map(Number);
+        const [hour, minute, second = '00'] = sunset.split(':').map(Number);
         let calculatedMinute = minute - 36;
         let calculatedHour = hour;
+        let calculatedSecond = second - 30;
 
-        if (calculatedMinute < 0) {
-          calculatedMinute += 60;
-          calculatedHour -= 1;
-        }
-
-        let calculatedSecond = -30;
         if (calculatedSecond < 0) {
           calculatedSecond += 60;
           calculatedMinute -= 1;
@@ -101,6 +96,7 @@
         }
 
         const calculatedTime = `${String(calculatedHour).padStart(2, '0')}:${String(calculatedMinute).padStart(2, '0')}:${String(calculatedSecond).padStart(2, '0')}`;
+
 
         if (rowDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
           todaySunset.innerText = `本日の日の入り時刻: ${sunset} (BGM切替: ${calculatedTime})`;
