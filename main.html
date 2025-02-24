@@ -70,7 +70,7 @@
       today.setUTCHours(0, 0, 0, 0);
 
       const nextWeek = new Date(today);
-      nextWeek.setDate(nextWeek.getDate() + 7);
+      nextWeek.setDate(nextWeek.getDate() + 6);
 
       rows.forEach(row => {
         const [date, sunset] = row.split(',').map(item => item.trim());
