@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunset Times</title>
+  <style>
+    li { margin: 5px 0; }
+    body {
+            font-family: monospace;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-spacing: 0;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: none;
+            border-left: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #F5FCFF;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+  </style>
+</head>
+<body>
+  <h1>日の入り時刻・BGM切替時刻</h1>
+  <p id="realtime"></p>
+  <table>
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>日の入り時刻</th>
+        <th>BGM切替時刻</th>
+      </tr>
+    </thead>
+    <tbody id="sunset-times"></tbody>
+  </table>
+
+  <script>
+    async function fetchSunsetTimes() {
+      const sunsetTable = document.getElementById('sunset-times');
+
+      const response = await fetch('sunset_2025.csv');
+      const data = await response.text();
+      const rows = data.split(/\r?\n/).slice(1); // 対応する改行コードを幅広く対応
+
+      const now = new Date();
+      const today = new Date(now.getTime() + (9 * 60 * 60 * 1000)); // 日本時間に変換
+      today.setUTCHours(0, 0, 0, 0);
+
+      const nextWeek = new Date(today);
+      nextWeek.setDate(nextWeek.getDate() + 6);
+
+      rows.forEach(row => {
+        const [date, sunset] = row.split(',').map(item => item.trim()); // 空白除去
+        const rowDate = new Date(date);
+
+        if (rowDate >= today && rowDate <= nextWeek) {
+          const [hour, minute] = sunset.split(':').map(Number);
+          let calculatedMinute = minute - 36;
+          let calculatedHour = hour;
+
+          if (calculatedMinute < 0) {
+            calculatedMinute += 60;
+            calculatedHour -= 1;
+          }
+
+          let calculatedSecond = -30;
+          if (calculatedSecond < 0) {
+            calculatedSecond += 60;
+            calculatedMinute -= 1;
+          }
+
+          if (calculatedMinute < 0) {
+            calculatedMinute += 60;
+            calculatedHour -= 1;
+          }
+
+          if (calculatedHour < 0) {
+            calculatedHour += 24;
+          }
+
+          const calculatedTime = `${String(calculatedHour).padStart(2, '0')}:${String(calculatedMinute).padStart(2, '0')}:${String(calculatedSecond).padStart(2, '0')}`;
+
+          const tableRow = document.createElement('tr');
+          tableRow.innerHTML = `<td>${date}</td><td>${sunset}</td><td>${calculatedTime}</td>`;
+          sunsetTable.appendChild(tableRow);
+        }
+      });
+    }
+
+    fetchSunsetTimes();
+
+    function twoDigit(num) {
+          let ret;
+          if( num < 10 ) 
+            ret = "0" + num; 
+          else 
+            ret = num; 
+          return ret;
+        }
+        function showClock() {
+          let nowTime = new Date();
+          let nowHour = twoDigit( nowTime.getHours() );
+          let nowMin  = twoDigit( nowTime.getMinutes() );
+          let nowSec  = twoDigit( nowTime.getSeconds() );
+          let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
+          document.getElementById("realtime").innerHTML = msg;
+        }
+        setInterval('showClock()',1000);
+  </script>
+</body>
+</html>
