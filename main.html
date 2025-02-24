@@ -50,7 +50,7 @@
       <tr>
         <th>日付</th>
         <th>日の入り時刻</th>
-        <th>BGM切替時刻</th>
+        <th>BGM切替時刻(目安)</th>
       </tr>
     </thead>
     <tbody id="sunset-times"></tbody>
@@ -99,7 +99,7 @@
 
 
         if (rowDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
-          todaySunset.innerText = `本日の日の入り時刻: ${sunset} (BGM切替: ${calculatedTime})`;
+          todaySunset.innerText = `本日の日の入り時刻: ${sunset} (BGM切替目安: ${calculatedTime})`;
         }
 
         if (rowDate >= today && rowDate <= nextWeek) {
