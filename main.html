@@ -44,6 +44,7 @@
 <body>
   <h1>日の入り時刻・BGM切替時刻</h1>
   <p id="realtime"></p>
+  <p id="today-sunset"></p>
   <table>
     <thead>
       <tr>
@@ -58,6 +59,7 @@
   <script>
     async function fetchSunsetTimes() {
       const sunsetTable = document.getElementById('sunset-times');
+      const todaySunset = document.getElementById('today-sunset');
 
       const response = await fetch('sunset_2025.csv');
       const data = await response.text();
@@ -68,39 +70,43 @@
       today.setUTCHours(0, 0, 0, 0);
 
       const nextWeek = new Date(today);
-      nextWeek.setDate(nextWeek.getDate() + 6);
+      nextWeek.setDate(nextWeek.getDate() + 7);
 
       rows.forEach(row => {
         const [date, sunset] = row.split(',').map(item => item.trim()); // 空白除去
         const rowDate = new Date(date);
 
+        const [hour, minute] = sunset.split(':').map(Number);
+        let calculatedMinute = minute - 36;
+        let calculatedHour = hour;
+
+        if (calculatedMinute < 0) {
+          calculatedMinute += 60;
+          calculatedHour -= 1;
+        }
+
+        let calculatedSecond = -30;
+        if (calculatedSecond < 0) {
+          calculatedSecond += 60;
+          calculatedMinute -= 1;
+        }
+
+        if (calculatedMinute < 0) {
+          calculatedMinute += 60;
+          calculatedHour -= 1;
+        }
+
+        if (calculatedHour < 0) {
+          calculatedHour += 24;
+        }
+
+        const calculatedTime = `${String(calculatedHour).padStart(2, '0')}:${String(calculatedMinute).padStart(2, '0')}:${String(calculatedSecond).padStart(2, '0')}`;
+
+        if (rowDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
+          todaySunset.innerText = `本日の日の入り時刻: ${sunset} (BGM切替: ${calculatedTime})`;
+        }
+
         if (rowDate >= today && rowDate <= nextWeek) {
-          const [hour, minute] = sunset.split(':').map(Number);
-          let calculatedMinute = minute - 36;
-          let calculatedHour = hour;
-
-          if (calculatedMinute < 0) {
-            calculatedMinute += 60;
-            calculatedHour -= 1;
-          }
-
-          let calculatedSecond = -30;
-          if (calculatedSecond < 0) {
-            calculatedSecond += 60;
-            calculatedMinute -= 1;
-          }
-
-          if (calculatedMinute < 0) {
-            calculatedMinute += 60;
-            calculatedHour -= 1;
-          }
-
-          if (calculatedHour < 0) {
-            calculatedHour += 24;
-          }
-
-          const calculatedTime = `${String(calculatedHour).padStart(2, '0')}:${String(calculatedMinute).padStart(2, '0')}:${String(calculatedSecond).padStart(2, '0')}`;
-
           const tableRow = document.createElement('tr');
           tableRow.innerHTML = `<td>${date}</td><td>${sunset}</td><td>${calculatedTime}</td>`;
           sunsetTable.appendChild(tableRow);
