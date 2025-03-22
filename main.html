@@ -79,7 +79,7 @@
         const [hour, minute, second = '00'] = sunset.split(':').map(Number);
         let calculatedMinute = minute - 37; //調整する分
         let calculatedHour = hour;
-        let calculatedSecond = second - 19; //調整する秒
+        let calculatedSecond = second - 21; //調整する秒
 
         if (calculatedSecond < 0) {
           calculatedSecond += 60;
