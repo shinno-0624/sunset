@@ -100,7 +100,7 @@
 
 
         if (rowDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
-          todaySunset.innerText = `本日の日の入り時刻: ${sunset}'<br>'(BGM切替目安: ${calculatedTime})`;
+          todaySunset.innerText = `本日の日の入り時刻: ${sunset}\n(BGM切替目安: ${calculatedTime})`;
         }
 
         if (rowDate >= today && rowDate <= nextWeek) {
@@ -133,6 +133,7 @@
   </script>
 </body>
 </html>
+
 
 
 
