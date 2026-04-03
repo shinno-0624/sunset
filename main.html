@@ -62,7 +62,7 @@
       const sunsetTable = document.getElementById('sunset-times');
       const todaySunset = document.getElementById('today-sunset');
 
-      const response = await fetch('sunset_2025.csv'); //csvファイル
+      const response = await fetch('sunset_2026.csv'); //csvファイル
       const data = await response.text();
       const rows = data.split(/\r?\n/).slice(1); // 対応する改行コードを幅広く対応
 
